@@ -1,2 +1,4 @@
 *.wheel
 *.DS_Store
+*.csv
+*.parquet
