@@ -130,3 +130,25 @@ def combine_features(df: pd.DataFrame, context: int = 5) -> pd.DataFrame:
         )
         symbol_rows.append(final_df)
     return pd.concat(symbol_rows)
+
+
+@torch.no_grad()
+def r2_loss(gt: pd.DataFrame, predictions: pd.DateFrame) -> int:
+    """
+    Get the loss of the training, validation or test split.
+
+    Args:
+        gt (pd.DataFrame): The ground truth data.
+        predictions (torch.Tensor): The model predictions.
+
+    Returns:
+        int: the r2 score.
+    """
+
+    weights = torch.tensor(gt["weight"].values)
+    y_true = torch.tensor(gt["responder_6"].values)
+    predictions = predictions.squeeze()
+    numerator = torch.sum(weights * (y_true - predictions) ** 2)
+    denominator = torch.sum(weights * y_true**2)
+    r2_loss = 1 - numerator / denominator
+    return r2_loss.item()
