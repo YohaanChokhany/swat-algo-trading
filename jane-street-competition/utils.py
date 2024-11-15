@@ -133,7 +133,7 @@ def combine_features(df: pd.DataFrame, context: int = 5) -> pd.DataFrame:
 
 
 @torch.no_grad()
-def r2_loss(gt: pd.DataFrame, predictions: pd.DateFrame) -> int:
+def r2_loss(gt: pd.DataFrame, predictions: pd.DataFrame) -> int:
     """
     Get the loss of the training, validation or test split.
 
